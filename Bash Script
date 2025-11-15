@@ -1,0 +1,64 @@
+# Splitting MRS DATA INTO TIME DIMENSION
+# Created by Arijit Bhattacharya (Ph.D. Scholar Ashoka University)
+# This code utilises FSL_MRS Splitting command thus installation of full FSL_MRS package is compulsory
+# This script splits a 4D/5D NIfTI-MRS dataset into separate dynamics along the DIM_DYN dimension.
+# Each dynamic (time point) is saved as its own NIfTI-MRS file in a dedicated folder.
+# Only the *_selected.nii.gz file is renamed to Dyn_X.nii.gz for clarity.
+
+#!/bin/bash
+
+# ----------- USER INPUT SECTION -----------
+
+# Full path of the input NIfTI-MRS file to be split
+# (Change this to your file path)
+input_file="directory/MRS_DATA.nii.gz"
+
+# Folder where the split dynamics will be stored
+# (Change this to preferred output directory)
+output_root="Directory/Dynamic_MRS"
+
+#SETUP
+
+# Create the output directory if it doesn't already exist
+mkdir -p "$output_root"
+
+#MAIN LOOP
+
+# Loop over each dynamic index
+# Here {0..19} means there are 20 dynamics total (indices start at 0) Since the Rule is to start from 0 and till N-1, thus 0-19 if N=20
+# If data has a different number of dynamics, adjust this range
+for i in {0..19}; do
+  # dyn_num is just a human-readable counter starting from 1
+  dyn_num=$((i+1))
+
+  # Create a separate folder for each dynamic (e.g., Dyn_1, Dyn_2, …)
+  output_dir="$output_root/Dyn_$dyn_num" #Make it Dyn_$dyn_num" for MRS data and Ref_$dyn_num" for water data
+  mkdir -p "$output_dir"
+
+  # Print which dynamic is being processed
+  echo "Extracting dynamic $dyn_num (index $i)..."
+
+  # Perform the split using FSL’s mrs_tools split function
+  # --file : input MRS file
+  # --dim  : specify which dimension to split (here DIM_DYN = time)
+  # --indices : which index to extract (zero-based)
+  # --output  : where to save the two resulting files (selected + others)
+  mrs_tools split \
+    --file "$input_file" \
+    --dim DIM_DYN \
+    --indices "$i" \
+    --output "$output_dir"
+
+  #FILE RENAME
+
+  # Find the output file containing the selected dynamic
+  selected_file=$(find "$output_dir" -name "*_selected.nii.gz")
+
+  # If found, rename it to Dyn_X.nii.gz for clarity
+  if [ -f "$selected_file" ]; then
+    mv "$selected_file" "$output_dir/Dyn_$dyn_num.nii.gz" #Make it Dyn_$dyn_num.nii.gz" for MRS data and Ref_$dyn_num.nii.gz" for water data
+    echo "Renamed selected file -> Dyn_$dyn_num.nii.gz"
+  fi
+
+  # The '_others.nii.gz' file remains unchanged for reference
+done
