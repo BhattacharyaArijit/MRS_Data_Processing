@@ -7,7 +7,7 @@
 
 #!/bin/bash
 
-# ----------- USER INPUT SECTION -----------
+# USER INPUT SECTION
 
 # Full path of the input NIfTI-MRS file to be split
 # (Change this to your file path)
