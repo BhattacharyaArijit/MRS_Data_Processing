@@ -1,5 +1,5 @@
 ### MRS DATA CONVERSION SCRIPT
-### Created by Arijit Bhattacharya (Ph.D. Scholar Ashoka University)
+### Created by Arijit Bhattacharya (Ph.D. Scholar, Ashoka University)
 ### This code utilises spec2nii toolbox, thus installation of spec2nii package is compulsory
 
 ###Installation of spec2nii (If not installed already)
@@ -8,7 +8,10 @@ pip install spec2nii
 
 mkdir -p /your_output_directory/NIFTI
 
+
+
 ### Philips (SDAT/SPAR) to NII
+
 outdir="/your_output_directory"
 
 for f in /your_input_directory/*.SDAT; do
@@ -29,13 +32,6 @@ for f in /your_input_directory/*.rda; do \
 done
 
 
-### DICOM (dcm) to NII
-for f in /your_input_directory/*.dcm; do
-    fname=$(basename "$f" .dcm)
-    spec2nii dicom -j -f "$fname" -o /your_output_directory/NIFTI "$f"
-done
-
-
 
 ### Siemens (ima) to NII
 
@@ -46,8 +42,16 @@ done
 
 
 
+### DICOM (dcm) to NII
 
-### Siemens TWIX RAW (.dat) to NII
+for f in /your_input_directory/*.dcm; do
+    fname=$(basename "$f" .dcm)
+    spec2nii dicom -j -f "$fname" -o /your_output_directory/NIFTI "$f"
+done
+
+
+
+### TWIX RAW (.dat) to NII
 
 for f in /your_input_directory/*.dat; do
     fname=$(basename "$f" .dat)
