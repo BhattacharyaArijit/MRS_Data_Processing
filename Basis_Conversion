@@ -1,0 +1,9 @@
+#This code converts the MARSS (INSPECTOR) simulated MRS Basis set to the FSL_MRS basis set
+
+basis_tools convert \
+/InputDirectory/MARSS_simulated_basis_in_Raw_Format \
+/OutputDirectory/FSL_Basis \
+--fieldstrength 3 \ #Mention the scanner field strength (3T or 7T)
+--bandwidth 2000 \ 
+--nucleus 1H \
+--remove_reference
