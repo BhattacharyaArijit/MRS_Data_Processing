@@ -7,3 +7,12 @@ basis_tools convert \
 --bandwidth 2000 \ 
 --nucleus 1H \
 --remove_reference
+
+
+
+#ADD MM 
+
+
+basis_tools add_set --add_MM \
+/InputDirectory/FSL_Basis \
+/OutputDirectory/FSL_Basis/FSL_Basis_with_MM
