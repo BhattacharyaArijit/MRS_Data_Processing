@@ -12,7 +12,6 @@ basis_tools convert \
 
 #ADD MM 
 
-
 basis_tools add_set --add_MM \
 /InputDirectory/FSL_Basis \
 /OutputDirectory/FSL_Basis/FSL_Basis_with_MM
