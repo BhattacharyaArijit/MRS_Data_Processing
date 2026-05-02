@@ -1,6 +1,6 @@
 ### MRS DATA CONVERSION SCRIPT
-### Created by Arijit Bhattacharya (Ph.D. Scholar, Ashoka University)
-### This code utilises spec2nii toolbox, thus installation of spec2nii package is compulsory
+### Compiled by Arijit Bhattacharya (Ph.D. Scholar, Ashoka University)
+### These command line code utilises spec2nii toolbox, thus installation of spec2nii package is compulsory
 
 ###Installation of spec2nii (If not installed already)
 
